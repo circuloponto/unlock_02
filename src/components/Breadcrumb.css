@@ -1,0 +1,67 @@
+.nav {
+  position: absolute;
+  right: 32px;
+  bottom: 100px;
+  z-index: 19;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 32px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  
+}
+
+.button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}
+
+.button.active {
+  transform: scale(1.2);
+}
+
+.horizontalIndicators {
+  display: flex;
+  gap: 8px;
+}
+
+.subDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.subDot.active {
+  background-color: #000;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    right: 16px;
+    padding: 8px;
+  }
+
+  .button {
+    width: 10px;
+    height: 10px;
+  }
+
+  .subDot {
+    width: 4px;
+    height: 4px;
+  }
+}

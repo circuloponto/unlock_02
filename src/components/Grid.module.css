@@ -1,0 +1,18 @@
+.gridContainer {
+  display: grid;
+    grid-template-columns: repeat(60, var(--cell-size));
+    grid-template-rows: repeat(316, var(--cell-size));
+    gap: 0px;
+    background-color: rgb(36 35 35 / 0%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid rgba(255, 255, 255, 0.025);
+ /*  background-color: rgba(255, 255, 255, 0.01); */
+}

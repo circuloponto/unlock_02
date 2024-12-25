@@ -1,0 +1,86 @@
+.container {
+  position: fixed;
+  bottom: 90px;
+  left: 10%;
+  background: rgba(255, 0, 0, 0);
+  z-index: 10;
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    bottom: 30px;
+    left: calc(50% - 30px);
+  }
+}
+
+.mainCircle {
+  width: 65px;
+  height: 60px;
+  border: 3px solid rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.194);
+  border-radius: 20%;
+  position: relative;
+}
+
+.directionDot {
+  width: 25px;
+  height: 25px;
+  background-color: rgb(72, 72, 72);
+  border: 7px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  position: absolute;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Gesture animations - direction is where the finger/wheel moves */
+@keyframes moveDown {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-50%, calc(-50% + 2px)); }
+}
+
+@keyframes moveUp {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-50%, calc(-50% - 2px)); }
+}
+
+@keyframes moveLeft {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(calc(-50% - 2px), -50%); }
+}
+
+@keyframes moveRight {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(calc(-50% + 2px), -50%); }
+}
+
+/* Position dots with animations */
+/* For slide 0.0 - bottom position */
+.downDot {
+  bottom: -30px;
+  left: 30px;
+  animation: moveUp 0.5s infinite ease-in-out;
+}
+
+/* For slides 1.0, 2.0, 3.0, 4.0 - top */
+.upDot {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: moveDown 0.5s infinite ease-in-out;
+}
+
+/* For slides 1.0, 3.0 - right */
+.rightDot {
+  top: 50%;
+  right: -30px;
+  transform: translate(-50%, -50%);
+  animation: moveLeft 0.5s infinite ease-in-out;
+}
+
+/* For slides 1.1, 1.2, 3.1 - left */
+.leftDot {
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  animation: moveRight 0.5s infinite ease-in-out;
+}
