@@ -104,31 +104,41 @@ const Slider = ({
   ]);
 
   const handleTouchStart = useCallback((e) => {
+    if (isMenuOpen) return;
     touchStartY.current = e.touches[0].clientY;
     touchStartX.current = e.touches[0].clientX;
-  }, []);
+  }, [isMenuOpen]);
 
   const handleTouchMove = useCallback((e) => {
+    if (isMenuOpen || isScrolling) return;
+    
     const touchEndY = e.touches[0].clientY;
     const touchEndX = e.touches[0].clientX;
     
     const yDiff = touchStartY.current - touchEndY;
     const xDiff = touchStartX.current - touchEndX;
 
+    // Lower threshold for touch (30px instead of 50px)
+    const threshold = 30;
+
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
-      if (xDiff > 50 && getCurrentConstraints().right) {
+      if (xDiff > threshold && getCurrentConstraints().right) {
+        e.preventDefault();
         handleNavigation('right');
-      } else if (xDiff < -50 && getCurrentConstraints().left) {
+      } else if (xDiff < -threshold && getCurrentConstraints().left) {
+        e.preventDefault();
         handleNavigation('left');
       }
     } else {
-      if (yDiff > 50 && getCurrentConstraints().down) {
+      if (yDiff > threshold && getCurrentConstraints().down) {
+        e.preventDefault();
         handleNavigation('down');
-      } else if (yDiff < -50 && getCurrentConstraints().up) {
+      } else if (yDiff < -threshold && getCurrentConstraints().up) {
+        e.preventDefault();
         handleNavigation('up');
       }
     }
-  }, [handleNavigation, getCurrentConstraints]);
+  }, [handleNavigation, getCurrentConstraints, isMenuOpen, isScrolling]);
 
   const handleMouseWheel = useCallback((e) => {
     e.preventDefault();
@@ -178,12 +188,10 @@ const Slider = ({
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
     
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchmove', e => e.preventDefault());
     };
   }, [handleKeyDown, handleMouseWheel]);
 

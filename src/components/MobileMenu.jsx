@@ -53,6 +53,9 @@ const MenuItem = styled.div`
   @media (max-width: 768px) {
     font-size: 72px;
   }
+  @media (max-width: 433px) {
+    font-size: 40px;
+  }
 `;
 
 const MenuInfo = styled.div`

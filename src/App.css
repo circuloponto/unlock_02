@@ -110,7 +110,7 @@ z-index: 1201;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: #a1978f;
+  color: #827a74;
   opacity: 1;
   font-weight: 500;
   transition: opacity 0.2s ease;
@@ -299,12 +299,23 @@ z-index: 1201;
 .mobile-menu .menuItem5 {
   width: 70%;
   margin: 10px 0;
-  color: #91867e;
+  color: #fcfcfc;
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 400px) {
+  .mobile-menu .menuItem1,
+  .mobile-menu .menuItem2,
+  .mobile-menu .menuItem3,
+  .mobile-menu .menuItem4,
+  .mobile-menu .menuItem5 {
+    font-size: 40px;
+  }
+}
+
 
 .container {
   width: 100vw;
