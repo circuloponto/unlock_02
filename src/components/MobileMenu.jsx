@@ -8,7 +8,7 @@ const MenuContainer = styled.div`
   right: 0;
   width: 100%;
   height: 100vh;
-  background: ${props => props.$slideColor ? `color-mix(in srgb, ${props.$slideColor} 90%, black 10%)` : '#000'};
+  background: ${props => props.$slideColor ? `color-mix(in srgb, ${props.$slideColor} 100%, black 0%)` : '#000'};
   z-index: 1200;
   transform: translateX(${props => props.$isOpen ? '0' : '100%'});
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);

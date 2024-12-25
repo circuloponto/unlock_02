@@ -101,8 +101,8 @@ const getSlideColor = (vIndex, hIndex) => {
     case 2: return '#B48A6C';
     case 3:
       switch(hIndex) {
-        case 0: return '#285a95c2';
-        case 1: return '#0e3d74c2';
+        case 0: return '#254b76';
+        case 1: return '#0d3563';
         default: return '#4A90E2';
       }
     case 4:
