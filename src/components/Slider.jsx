@@ -15,6 +15,7 @@ const Slider = ({
   const touchStartX = useRef(0);
   const lastNavigatedPosition = useRef({ vertical: 0, horizontal: 0 });
   const hasNavigatedThisTouch = useRef(false);
+  const movementDirection = useRef(null); // 'horizontal' or 'vertical'
 
   // Navigation constraints for each slide position
   const navigationConstraints = {
@@ -63,6 +64,12 @@ const Slider = ({
           // From 4.0 to 3.1
           setCurrentVerticalIndex(3);
           setCurrentHorizontalIndex(1);
+        } else if (currentVerticalIndex > 0) {
+          setCurrentVerticalIndex(currentVerticalIndex - 1);
+          // Keep horizontal index unless it's invalid for the new vertical position
+          if (currentVerticalIndex === 1) {
+            setCurrentHorizontalIndex(0); // Reset to 0 when moving up from section 1
+          }
         }
         break;
 
@@ -83,22 +90,23 @@ const Slider = ({
           // From 3.1 to 4.0
           setCurrentVerticalIndex(4);
           setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex < 4) {
+          setCurrentVerticalIndex(currentVerticalIndex + 1);
+          setCurrentHorizontalIndex(0); // Reset horizontal index when moving down
         }
         break;
 
       case 'left':
         if (currentHorizontalIndex > 0) {
-          setCurrentHorizontalIndex(prev => prev - 1);
+          setCurrentHorizontalIndex(currentHorizontalIndex - 1);
         }
         break;
 
       case 'right':
         if (currentHorizontalIndex < 2 && currentVerticalIndex === 1) {
-          // In section 1, can go up to 1.2
-          setCurrentHorizontalIndex(prev => prev + 1);
+          setCurrentHorizontalIndex(currentHorizontalIndex + 1);
         } else if (currentHorizontalIndex < 1 && currentVerticalIndex === 3) {
-          // In section 3, can only go up to 3.1
-          setCurrentHorizontalIndex(prev => prev + 1);
+          setCurrentHorizontalIndex(currentHorizontalIndex + 1);
         }
         break;
     }
@@ -125,6 +133,7 @@ const Slider = ({
     touchStartY.current = e.touches[0].clientY;
     touchStartX.current = e.touches[0].clientX;
     hasNavigatedThisTouch.current = false;
+    movementDirection.current = null;
     lastNavigatedPosition.current = { vertical: currentVerticalIndex, horizontal: currentHorizontalIndex };
     console.log('Touch Start Position:', { x: touchStartX.current, y: touchStartY.current });
   }, [isMenuOpen, currentVerticalIndex, currentHorizontalIndex]);
@@ -147,8 +156,8 @@ const Slider = ({
 
     const threshold = 15;
 
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-      console.log('Horizontal movement detected');
+    // Only handle the dominant movement direction
+    if (Math.abs(xDiff) > Math.abs(yDiff) * 2) {  // Horizontal movement is clearly dominant
       if (xDiff > threshold && getCurrentConstraints().right) {
         console.log('Moving right');
         e.preventDefault();
@@ -160,8 +169,7 @@ const Slider = ({
         hasNavigatedThisTouch.current = true;
         handleNavigation('left');
       }
-    } else {
-      console.log('Vertical movement detected');
+    } else if (Math.abs(yDiff) > Math.abs(xDiff) * 2) {  // Vertical movement is clearly dominant
       if (yDiff > threshold && getCurrentConstraints().down) {
         console.log('Moving down');
         e.preventDefault();
@@ -304,7 +312,7 @@ const Slider = ({
           );
         })}
       </div>
-      <ScrollIndicator constraints={getCurrentConstraints()} />
+     {/*  <ScrollIndicator constraints={getCurrentConstraints()} /> */}
     </div>
   );
 };

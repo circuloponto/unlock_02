@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Slider from './components/Slider';
 import ProgressBar from './components/ProgressBar';
+import DiamondIndicator from './components/DiamondIndicator';
 import Navbar from './components/Navbar';
 import Grid from './components/Grid';
 import './App.css';
@@ -27,7 +28,7 @@ const BreadcrumbsNav = styled.nav`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  z-index: 1000;
+  z-index: 2001;
   padding: 10px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
@@ -90,10 +91,10 @@ const ProgressBarContainer = styled.div`
 
 const getSlideColor = (vIndex, hIndex) => {
   switch(vIndex) {
-    case 0: return '#CBBEB3';
+    case 0: return '#75b1e1';
     case 1:
       switch(hIndex) {
-        case 0: return '#e6821e80';
+        case 0: return '#daa77a';
         case 1: return '#EEB559';
         case 2: return '#E5BF81';
         default: return '#E4815D';
@@ -116,10 +117,10 @@ const getSlideColor = (vIndex, hIndex) => {
 
 const getBreadcrumbColor = (vIndex, hIndex) => {
   switch(vIndex) {
-    case 0: return '#3A4358';  // Darker version of #576581
+    case 0: return '#75b1e1';  // Darker version of #576581
     case 1:
       switch(hIndex) {
-        case 0: return '#CBBEB3';  // Darker version of #E4815D
+        case 0: return '#daa77a';  // Darker version of #E4815D
         case 1: return '#D99B31';  // Darker version of #EEB559
         case 2: return '#C9A45C';  // Darker version of #E5BF81
         default: return '#D15B35';
@@ -199,6 +200,52 @@ function App() {
     }
   };
 
+  const handleIndicatorNavigation = (direction) => {
+    switch(direction) {
+      case 'up':
+        if (currentVerticalIndex === 1 && currentHorizontalIndex === 0) {
+          setCurrentVerticalIndex(0);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex === 2) {
+          setCurrentVerticalIndex(1);
+          setCurrentHorizontalIndex(2);
+        } else if (currentVerticalIndex === 3 && currentHorizontalIndex === 0) {
+          setCurrentVerticalIndex(2);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex === 4) {
+          setCurrentVerticalIndex(3);
+          setCurrentHorizontalIndex(1);
+        }
+        break;
+      case 'down':
+        if (currentVerticalIndex === 0) {
+          setCurrentVerticalIndex(1);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex === 1 && currentHorizontalIndex === 2) {
+          setCurrentVerticalIndex(2);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex === 2) {
+          setCurrentVerticalIndex(3);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex === 3 && currentHorizontalIndex === 1) {
+          setCurrentVerticalIndex(4);
+          setCurrentHorizontalIndex(0);
+        }
+        break;
+      case 'left':
+        if (currentHorizontalIndex > 0) {
+          setCurrentHorizontalIndex(currentHorizontalIndex - 1);
+        }
+        break;
+      case 'right':
+        if ((currentVerticalIndex === 1 && currentHorizontalIndex < 2) ||
+            (currentVerticalIndex === 3 && currentHorizontalIndex < 1)) {
+          setCurrentHorizontalIndex(currentHorizontalIndex + 1);
+        }
+        break;
+    }
+  };
+
   useEffect(() => {
     // Don't modify body overflow as it might interfere with touch events
     return () => {
@@ -215,12 +262,32 @@ function App() {
         isMenuOpen={isMenuOpen}
         setCurrentVerticalIndex={setCurrentVerticalIndex}
         setCurrentHorizontalIndex={setCurrentHorizontalIndex}
-      />
-      <ProgressBarContainer />
+      >
+        <div className="menu-container">
+          <button 
+            className={`hamburger ${isMenuOpen ? 'hamburger-clicked' : ''}`} 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Menu"
+          >
+            <div className={`hamburger-box ${isMenuOpen ? 'hamburger-box-clicked' : ''}`}>
+              <div className={`hamburger-inner ${isMenuOpen ? 'hamburger-inner-clicked' : ''}`}></div>
+            </div>
+          </button>
+        </div>
+      </Navbar>
+      {/* <ProgressBarContainer /> */}
       <ProgressBar
         slides={slides}
         currentVerticalIndex={currentVerticalIndex}
         currentHorizontalIndex={currentHorizontalIndex}
+      />
+      <DiamondIndicator
+        currentVerticalIndex={currentVerticalIndex}
+        currentHorizontalIndex={currentHorizontalIndex}
+        slides={slides}
+        isMenuOpen={isMenuOpen}
+        getSlideColor={getSlideColor}
+        onNavigate={handleIndicatorNavigation}
       />
       <Grid />
       <Slider

@@ -5,11 +5,13 @@
   width: 100vw;
   height: 70px;
   transition: all 0.6s ease;
+  border: 2px solid #ffffff00;
   /* padding: 0 20px; */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+/*   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); */
   z-index: 1201;
   overflow: hidden;
   transform-origin: top center;
+  background-color: #e6821e00;
 }
 
 .navContainer.scrolled {
@@ -17,8 +19,9 @@ position:fixed;
 top: 30px;
 left: 50%;
 transform: translateX(-50%);
+border: 2px solid #ffffff47;
 background: hsl(0deg 0% 100% / 10%);
-height: 50px;
+height: 40px;
 width: 200px;
 padding: 0;
 border-radius: 10px;
@@ -75,7 +78,7 @@ z-index: 1201;
 }
 
 .navContainer.scrolled .logo img {
-  height: 35px;
+  height: 43px;
 }
 
 .menuItemsContainer {
@@ -111,6 +114,8 @@ z-index: 1201;
   justify-content: center;
   align-items: center;
   color: #827a74;
+  color: #545368;
+  color: #394172b8;
   opacity: 1;
   font-weight: 500;
   transition: opacity 0.2s ease;
@@ -139,9 +144,10 @@ z-index: 1201;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.095);
+  background: rgba(0, 0, 0, 0.05);
   height: 40px;
   width: 40px;
+  transform: scale(0.8);
   transition: background-color 0.3s ease;
   --current-color: rgb(222, 222, 222);
   --hamburger-color: rgb(222, 222, 222);
@@ -152,6 +158,9 @@ z-index: 1201;
   height: 24px;
   display: inline-block;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
 }
 
@@ -160,11 +169,34 @@ z-index: 1201;
   top: 50%;
   margin-top: -2px;
   position: absolute;
-  width: 30px;
+  width: 20px;
   height: 4px;
-  background-color: var(--hamburger-color);
+  background-color: white;
   transition: all 0.15s ease;
 }
+
+/* Clicked state for inner line */
+.hamburger-inner-clicked {
+  width: 20px;
+  /* background: rgba(0, 0, 0, 0.27); */
+  /* Add any other styles for clicked state */
+}
+
+.hamburger-box-clicked {
+  /* Add styles for the box when clicked */
+}
+
+.hamburger-clicked {
+  /* Add styles for the entire button when clicked */
+
+}
+
+/* @media screen and (min-width: 500px) {
+  .hamburger-inner {
+    width: 30px;
+    height: 3px;
+  }
+} */
 
 .hamburger-inner::before,
 .hamburger-inner::after {
@@ -172,11 +204,18 @@ z-index: 1201;
   display: block;
   position: absolute;
   width: 30px;
-  height: 5px;
-  background-color: var(--hamburger-color);
-  background-color: rgba(0, 0, 0, 0.2);
+  height: 4px;
+  margin: 0 0 0 -4px;
+  background-color: rgba(0, 0, 0, 0.239);
   transition: all 0.15s ease;
 }
+
+/* @media screen and (max-width: 500px) {
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+    height: 3px;
+  }
+} */
 
 .hamburger-inner::before {
   top: -12px;
@@ -214,6 +253,11 @@ z-index: 1201;
 .hamburger-icon:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
+.hamburger-inner-clicked::after, .hamburger-inner-clicked::before {
+  /* width: 20px; */
+  background: rgb(255, 255, 255);
+  /* Add any other styles for clicked state */
+}
 
 @media screen and (max-width: 900px) {
   .menuItemsContainer {
@@ -231,8 +275,8 @@ z-index: 1201;
 @media screen and (max-width: 500px) {
   .breadcrumbs-custom {
     bottom: 60px !important;
-    left: 25% !important;
-    transform: scale(0.8) !important;
+    left: 50% !important;
+    transform: translateX(-50%) scale(0.8) !important;
   }
 
   .scroll-indicator-container {
@@ -329,7 +373,7 @@ z-index: 1201;
   position: fixed;
   bottom: 50px;
   height: 50px;
-  left: 65%;
+  left: 50%;
   border: 2px solid #ffffff47;
   transform: translateX(-50%);
   display: flex;
@@ -340,4 +384,23 @@ z-index: 1201;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  z-index: 2001;
+}
+
+.breadcrumbs-custom {
+  position: fixed;
+  bottom: 50px;
+  height: 50px;
+  left: 50%;
+  border: 2px solid #ffffff47;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  z-index: 2001; /* Higher than NavigationGrid's z-index */
+  pointer-events: auto; /* Ensure clicks are registered */
 }

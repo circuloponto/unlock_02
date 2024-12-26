@@ -11,23 +11,10 @@ const Navbar = ({
     setCurrentVerticalIndex,
     setCurrentHorizontalIndex 
 }) => {
-    const [isMobile, setIsMobile] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [showMenu, setShowMenu] = useState(true);
     const [isHovered, setIsHovered] = useState(false);
     const [isPressed, setIsPressed] = useState(false);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 900);
-            if (window.innerWidth > 900) {
-                onMenuToggle(false);
-            }
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [onMenuToggle]);
 
     useEffect(() => {
         setIsScrolled(currentSlide > 0);
@@ -53,11 +40,11 @@ const Navbar = ({
                     </div>
                     
                     <div className="menuItemsContainer">
-                        <div className="menuItem1"onClick={() => handleMenuItemClick(0, 0)}>about</div>
-                        <div className="menuItem2"onClick={() => handleMenuItemClick(1, 0)}>objectives</div>
-                        <div className="menuItem3"onClick={() => handleMenuItemClick(2, 0)}>stakeholders</div>
-                        <div className="menuItem4"onClick={() => handleMenuItemClick(3, 0)}>field reports</div>
-                        <div className="menuItem5"onClick={() => handleMenuItemClick(4, 0)}>Contacts</div>
+                        <div className="menuItem1" onClick={() => handleMenuItemClick(0, 0)}>about</div>
+                        <div className="menuItem2" onClick={() => handleMenuItemClick(1, 0)}>objectives</div>
+                        <div className="menuItem3" onClick={() => handleMenuItemClick(2, 0)}>stakeholders</div>
+                        <div className="menuItem4" onClick={() => handleMenuItemClick(3, 0)}>field reports</div>
+                        <div className="menuItem5" onClick={() => handleMenuItemClick(4, 0)}>Contacts</div>
                     </div>
 
                     <div 
@@ -72,7 +59,7 @@ const Navbar = ({
                         }}
                     >
                         <div className="hamburger-box">
-                            <div className="hamburger-inner"></div>
+                            <div className={`hamburger-inner ${isMenuOpen ? 'hamburger-inner-clicked' : ''}`}></div>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ const Grid = () => {
       // Get the smallest viewport dimension
       const minViewportSize = Math.min(window.innerWidth, window.innerHeight);
       // Divide by desired number of cells (e.g., 8 for an 8x8 grid)
-      const newCellSize = Math.floor(minViewportSize / 16);
+      const newCellSize = Math.floor(minViewportSize / 24);
       setCellSize(newCellSize);
     };
 
@@ -19,7 +19,7 @@ const Grid = () => {
   }, []);
 
   // Create an 8x8 grid
-  const cells = Array(3000).fill(null);
+  const cells = Array(5000).fill(null);
 
   return (
     <div className={styles.gridContainer} style={{ '--cell-size': `${cellSize}px` }}>
