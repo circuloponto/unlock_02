@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Grid.module.css';
 
+const TOTAL_COLUMNS = 24;
+
 const Grid = () => {
   const [cellSize, setCellSize] = useState(0);
 
   useEffect(() => {
     const calculateCellSize = () => {
-      // Get the smallest viewport dimension
-      const minViewportSize = Math.min(window.innerWidth, window.innerHeight);
-      // Divide by desired number of cells (e.g., 8 for an 8x8 grid)
-      const newCellSize = Math.floor(minViewportSize / 24);
+      // Use exact division for precise cell sizes
+      const newCellSize = window.innerWidth / TOTAL_COLUMNS;
       setCellSize(newCellSize);
     };
 
@@ -18,11 +18,13 @@ const Grid = () => {
     return () => window.removeEventListener('resize', calculateCellSize);
   }, []);
 
-  // Create an 8x8 grid
-  const cells = Array(5000).fill(null);
+  const cells = Array(TOTAL_COLUMNS * 150).fill(null);
 
   return (
-    <div className={styles.gridContainer} style={{ '--cell-size': `${cellSize}px` }}>
+    <div 
+      className={styles.gridContainer} 
+      style={{ '--cell-size': `${cellSize}px` }}
+    >
       {cells.map((_, index) => (
         <div key={index} className={styles.cell} />
       ))}

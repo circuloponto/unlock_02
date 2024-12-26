@@ -1,19 +1,23 @@
 .gridContainer {
   display: grid;
-    grid-template-columns: repeat(60, var(--cell-size));
-    grid-template-rows: repeat(316, var(--cell-size));
-    gap: 0px;
-    background-color: rgb(36 35 35 / 0%);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+  grid-template-columns: repeat(24, var(--cell-size));
+  grid-template-rows: repeat(150, var(--cell-size));
+  gap: 0;
+  background-color: rgb(36 35 35 / 0%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .cell {
   width: var(--cell-size);
   height: var(--cell-size);
   border: none;
+  box-sizing: border-box;
 }
 
 .cell:nth-child(1n) {
@@ -23,6 +27,13 @@
 .cell:nth-child(1n+1) {
   border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
 }
-.cell:nth-child(10n+2) {
-  border-right: 1px solid hsla(0, 0%, 100%, 0.368);
+
+/* Third column line, starting from row 3 */
+.cell:nth-child(n + 49):nth-child(24n + 3) {
+  border-right: 1px dashed rgba(255, 255, 255, 0.351);
+}
+
+/* Third-last column line, starting from row 3 */
+.cell:nth-child(n + 49):nth-child(24n + 22) {
+  border-left: 1px dashed rgba(255, 255, 255, 0.351);
 }

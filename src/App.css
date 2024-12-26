@@ -292,7 +292,7 @@ z-index: 1201;
   }
 
   .navContainer.scrolled .hamburger-icon {
-    display: block;
+    display: flex;
     opacity: 1;
     visibility: visible;
   }
