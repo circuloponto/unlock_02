@@ -1,12 +1,14 @@
 .container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow: visible;
-  touch-action: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .viewport {
@@ -17,8 +19,9 @@
   height: 100%;
   transition: transform 0.85s cubic-bezier(0.645, 0.045, 0.355, 1);
   will-change: transform;
-  touch-action: auto;
-  -webkit-overflow-scrolling: touch;
+  touch-action: none;
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
 }
 
 .section {
@@ -26,8 +29,8 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  touch-action: auto;
-  -webkit-overflow-scrolling: touch;
+  touch-action: none;
+  -webkit-transform: translate3d(0,0,0);
 }
 
 .section.active {
@@ -41,8 +44,8 @@
   display: flex;
   width: 300vw; /* Assuming max 3 horizontal slides */
   height: 100vh;
-  touch-action: auto;
-  -webkit-overflow-scrolling: touch;
+  touch-action: none;
+  -webkit-transform: translate3d(0,0,0);
 }
 
 .horizontalSection {
@@ -53,8 +56,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  touch-action: auto;
-  -webkit-overflow-scrolling: touch;
+  touch-action: none;
+  -webkit-transform: translate3d(0,0,0);
 }
 
 .horizontalSection.active {

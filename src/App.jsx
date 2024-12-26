@@ -189,7 +189,10 @@ function App() {
   };
 
   const getCurrentSlideColor = () => {
-    if (slides[currentVerticalIndex].horizontal) {
+    const currentSlide = slides[currentVerticalIndex];
+    if (!currentSlide) return getSlideColor(0, 0); // Fallback color
+    
+    if (currentSlide.horizontal) {
       return getSlideColor(currentVerticalIndex, currentHorizontalIndex);
     } else {
       return getSlideColor(currentVerticalIndex, 0);
@@ -197,8 +200,10 @@ function App() {
   };
 
   useEffect(() => {
-    isMenuOpen && (document.body.style.overflow = 'hidden');
-    !isMenuOpen && (document.body.style.overflow = 'unset');
+    // Don't modify body overflow as it might interfere with touch events
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isMenuOpen]);
 
   return (

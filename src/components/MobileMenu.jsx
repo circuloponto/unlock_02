@@ -93,7 +93,9 @@ const MobileMenu = ({ isOpen, onClose, setCurrentVerticalIndex, setCurrentHorizo
       gestureDirection: 'vertical',
       smooth: true,
       smoothTouch: false,
-      touchMultiplier: 2,
+      touchMultiplier: 1,
+      touchInertiaMultiplier: 0,
+      infinite: false,
     });
 
     const raf = (time) => {
