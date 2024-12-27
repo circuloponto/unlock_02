@@ -49,45 +49,22 @@ const BreadcrumbButton = styled.button`
   height: ${props => props.$isMain ? '16px' : '12px'};
   border-radius: 50%;
   border: 2px solid;
-  padding: 0;
   background: transparent;
   cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  padding: 0;
+  transition: transform 0.3s ease;
+  
   &:hover {
-    transform: scale(1.1);
-  }
-
-  &.active {
     transform: scale(1.2);
   }
 `;
 
 const SlideSection = styled.section`
-  background-color: ${props => props.$bgColor};
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: white;
+  width: 100vw;
+  height: 100vh;
+  background-color: ${props => props.$bgColor || '#000'};
+  transition: background-color 0.5s ease;
 `;
-
-const ProgressBarContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 10px;
-  background: rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-`;
-
-
 
 const getSlideColor = (vIndex, hIndex) => {
   switch(vIndex) {
@@ -111,33 +88,36 @@ const getSlideColor = (vIndex, hIndex) => {
         case 0: return '#98525b';
         default: return '#4A90E2';
       }
+    case 5:
+      return '#2B3548';
     default: return '#576581';
   }
 };
 
 const getBreadcrumbColor = (vIndex, hIndex) => {
   switch(vIndex) {
-    case 0: return '#75b1e1';  // Darker version of #576581
+    case 0: return '#75b1e1';
     case 1:
       switch(hIndex) {
-        case 0: return '#daa77a';  // Darker version of #E4815D
-        case 1: return '#D99B31';  // Darker version of #EEB559
-        case 2: return '#C9A45C';  // Darker version of #E5BF81
+        case 0: return '#daa77a';
+        case 1: return '#D99B31';
+        case 2: return '#C9A45C';
         default: return '#D15B35';
       }
-    case 2: return '#96714F';  // Darker version of #B48A6C
+    case 2: return '#96714F';
     case 3:
       switch(hIndex) {
-        case 0: return '#2B74C9';  // Darker version of #4A90E2
-        case 1: return '#4B89D6';  // Darker version of #7EB3F1
+        case 0: return '#2B74C9';
+        case 1: return '#4B89D6';
         default: return '#2B74C9';
       }
     case 4:
       switch(hIndex) {
-        case 0: return '#95525b';  // Darker version of #4A90E2
-       
+        case 0: return '#95525b';
         default: return '#2B74C9';
       }
+    case 5:
+      return '#1A2130';
     default: return '#3A4358';
   }
 };
@@ -163,8 +143,11 @@ const slides = [
     ],
   },
   { 
-    content: <SlideSection $bgColor={getSlideColor(4, 0)}>{/* Slide 3 */}</SlideSection>
+    content: <SlideSection $bgColor={getSlideColor(4, 0)}>{/* Slide 5 */}</SlideSection>
   },
+  { 
+    content: <SlideSection $bgColor={getSlideColor(5, 0)}>{/* Slide 6 */}</SlideSection>
+  }
 ];
 
 function App() {
@@ -203,7 +186,11 @@ function App() {
   const handleIndicatorNavigation = (direction) => {
     switch(direction) {
       case 'up':
-        if (currentVerticalIndex === 1 && currentHorizontalIndex === 0) {
+        if (currentVerticalIndex === 0) {
+          // From first slide to last
+          setCurrentVerticalIndex(5);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex === 1 && currentHorizontalIndex === 0) {
           setCurrentVerticalIndex(0);
           setCurrentHorizontalIndex(0);
         } else if (currentVerticalIndex === 2) {
@@ -215,10 +202,17 @@ function App() {
         } else if (currentVerticalIndex === 4) {
           setCurrentVerticalIndex(3);
           setCurrentHorizontalIndex(1);
+        } else if (currentVerticalIndex === 5) {
+          setCurrentVerticalIndex(4);
+          setCurrentHorizontalIndex(0);
         }
         break;
       case 'down':
-        if (currentVerticalIndex === 0) {
+        if (currentVerticalIndex === 5) {
+          // From last slide to first
+          setCurrentVerticalIndex(0);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex === 0) {
           setCurrentVerticalIndex(1);
           setCurrentHorizontalIndex(0);
         } else if (currentVerticalIndex === 1 && currentHorizontalIndex === 2) {
@@ -229,6 +223,9 @@ function App() {
           setCurrentHorizontalIndex(0);
         } else if (currentVerticalIndex === 3 && currentHorizontalIndex === 1) {
           setCurrentVerticalIndex(4);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex === 4) {
+          setCurrentVerticalIndex(5);
           setCurrentHorizontalIndex(0);
         }
         break;
@@ -262,58 +259,47 @@ function App() {
         isMenuOpen={isMenuOpen}
         setCurrentVerticalIndex={setCurrentVerticalIndex}
         setCurrentHorizontalIndex={setCurrentHorizontalIndex}
-      >
-        <div className="menu-container">
-          <button 
-            className={`hamburger ${isMenuOpen ? 'hamburger-clicked' : ''}`} 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Menu"
-          >
-            <div className={`hamburger-box ${isMenuOpen ? 'hamburger-box-clicked' : ''}`}>
-              <div className={`hamburger-inner ${isMenuOpen ? 'hamburger-inner-clicked' : ''}`}></div>
-            </div>
-          </button>
-        </div>
-      </Navbar>
-      {/* <ProgressBarContainer /> */}
-      <ProgressBar
-        slides={slides}
-        currentVerticalIndex={currentVerticalIndex}
-        currentHorizontalIndex={currentHorizontalIndex}
       />
-      <DiamondIndicator
-        currentVerticalIndex={currentVerticalIndex}
-        currentHorizontalIndex={currentHorizontalIndex}
-        slides={slides}
-        isMenuOpen={isMenuOpen}
-        getSlideColor={getSlideColor}
-        onNavigate={handleIndicatorNavigation}
-      />
+      
       <Grid />
-      <Slider
-        slides={slides}
-        currentVerticalIndex={currentVerticalIndex}
-        setCurrentVerticalIndex={setCurrentVerticalIndex}
-        currentHorizontalIndex={currentHorizontalIndex}
-        setCurrentHorizontalIndex={setCurrentHorizontalIndex}
+
+      <Content>
+        <Slider
+          slides={slides}
+          currentVerticalIndex={currentVerticalIndex}
+          setCurrentVerticalIndex={setCurrentVerticalIndex}
+          currentHorizontalIndex={currentHorizontalIndex}
+          setCurrentHorizontalIndex={setCurrentHorizontalIndex}
+          isMenuOpen={isMenuOpen}
+        />
+      </Content>
+
+      <DiamondIndicator 
+        onNavigate={handleIndicatorNavigation}
         isMenuOpen={isMenuOpen}
+        currentVerticalIndex={currentVerticalIndex}
+        currentHorizontalIndex={currentHorizontalIndex}
+        getSlideColor={getSlideColor}
       />
-      <Content />
+
       <BreadcrumbsNav className="breadcrumbs-custom" $menuOpen={isMenuOpen}>
         {slides.map((slide, vIndex) => (
           slide.horizontal ? (
-            <HorizontalBreadcrumbs key={vIndex}>
+            <HorizontalBreadcrumbs key={vIndex}
+           >
               {slide.horizontal.map((_, hIndex) => (
                 <BreadcrumbButton
                   key={`${vIndex}-${hIndex}`}
                   onClick={() => handleBreadcrumbClick(vIndex, hIndex)}
                   style={{
-                    borderColor: currentVerticalIndex === vIndex && currentHorizontalIndex === hIndex
-                      ? getActiveBorderColor()
-                      : '#fff',
+                    borderColor:currentVerticalIndex === vIndex && currentHorizontalIndex === hIndex
+                    ?'rgb(230, 129, 29)' : 'white',
                     background: currentVerticalIndex === vIndex && currentHorizontalIndex === hIndex
-                      ? getActiveBorderColor()
-                      : 'transparent'
+                  ? 'rgb(230, 129, 29)'
+                  : 'transparent',
+                  boxShadow: currentVerticalIndex === vIndex && currentHorizontalIndex === hIndex
+                  ? `0px 0px 0px 2px rgba(255, 255, 255, 0.6)`
+                  : 'none'
                   }}
                 />
               ))}
@@ -324,12 +310,13 @@ function App() {
               $isMain
               onClick={() => handleBreadcrumbClick(vIndex, 0)}
               style={{
-                borderColor: currentVerticalIndex === vIndex
-                  ? getActiveBorderColor()
-                  : '#fff',
+                borderColor: currentVerticalIndex === vIndex ? 'rgb(230, 129, 29)' : 'white',
                 background: currentVerticalIndex === vIndex
-                  ? getActiveBorderColor()
-                  : 'transparent'
+                  ? 'rgb(230, 129, 29)'
+                  : 'transparent',
+                  boxShadow: currentVerticalIndex === vIndex
+                  ? `0px 0px 0px 2px rgba(255, 255, 255, 0.6)`
+                  : 'none'
               }}
             />
           )

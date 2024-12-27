@@ -1,6 +1,6 @@
 .navContainer{
   position: fixed;
-  top: 10px;
+  top: 35px;
   left: 0;
   width: 100vw;
   height: 70px;
@@ -11,7 +11,7 @@
   z-index: 1201;
   overflow: hidden;
   transform-origin: top center;
-  background-color: #e6821e00;
+  background-color: #ffffff0e;
 }
 
 .navContainer.scrolled {
@@ -103,9 +103,9 @@ z-index: 1201;
   pointer-events: none;
 }
 
-.menuItem1,.menuItem2,.menuItem3,.menuItem4,.menuItem5 {
+.menuItem1,.menuItem2,.menuItem3,.menuItem4,.menuItem5,.menuItem6 {
   width: auto;
-  padding: 10px;
+  padding: 10px 20px;
   height: 35px;
   background: rgba(128, 128, 128, 0);
   border-radius: 5px;
@@ -113,26 +113,55 @@ z-index: 1201;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: #827a74;
-  color: #545368;
   color: #394172b8;
+  color: #ffffff;
+  /* color: #376293; */
   opacity: 1;
   font-weight: 500;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
   cursor: pointer;
+  user-select: none;
 }
 
+.menuItem1:hover,.menuItem2:hover,.menuItem3:hover,.menuItem4:hover,.menuItem5:hover,.menuItem6:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #394172;
+  transform: translateY(-1px);
+}
+
+.menuItem1:active,.menuItem2:active,.menuItem3:active,.menuItem4:active,.menuItem5:active,.menuItem6:active {
+  transform: translateY(0px);
+  background: rgba(255, 255, 255, 0.2);
+}
+.menuItem1{
+  border-bottom:4px solid rgb(230, 129, 29);
+  padding: 0 15px;
+  color: #164266;
+  background: rgba(255, 255, 255, 0.111);
+}
+.menuItem6{
+ /*  border-bottom:4px solid rgb(230 131 29); */
+  padding: 0 15px 3px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border-radius: 8px;
+  background: rgb(22 66 102);
+}
 .navContainer:not(.scrolled) .menuItem1 { transition-delay: 0.5s; }
 .navContainer:not(.scrolled) .menuItem2 { transition-delay: 0.5s; }
 .navContainer:not(.scrolled) .menuItem3 { transition-delay: 0.5s; }
 .navContainer:not(.scrolled) .menuItem4 { transition-delay: 0.5s; }
 .navContainer:not(.scrolled) .menuItem5 { transition-delay: 0.5s; }
+.navContainer:not(.scrolled) .menuItem6 { transition-delay: 0.5s; }
 
 .navContainer.scrolled .menuItem1,
 .navContainer.scrolled .menuItem2,
 .navContainer.scrolled .menuItem3,
 .navContainer.scrolled .menuItem4,
-.navContainer.scrolled .menuItem5 {
+.navContainer.scrolled .menuItem5,
+.navContainer.scrolled .menuItem6 {
   opacity: 0;
   transition: opacity 0s;
 }
@@ -340,7 +369,8 @@ z-index: 1201;
 .mobile-menu .menuItem2,
 .mobile-menu .menuItem3,
 .mobile-menu .menuItem4,
-.mobile-menu .menuItem5 {
+.mobile-menu .menuItem5,
+.mobile-menu .menuItem6 {
   width: 70%;
   margin: 10px 0;
   color: #fcfcfc;
@@ -355,7 +385,8 @@ z-index: 1201;
   .mobile-menu .menuItem2,
   .mobile-menu .menuItem3,
   .mobile-menu .menuItem4,
-  .mobile-menu .menuItem5 {
+  .mobile-menu .menuItem5,
+  .mobile-menu .menuItem6 {
     font-size: 40px;
   }
 }

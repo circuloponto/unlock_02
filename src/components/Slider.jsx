@@ -19,14 +19,15 @@ const Slider = ({
 
   // Navigation constraints for each slide position
   const navigationConstraints = {
-    "0.0": { up: false, down: true, left: false, right: false },    // Can only go down to 1.0
+    "0.0": { up: true, down: true, left: false, right: false },    // Can go up to last slide or down to 1.0
     "1.0": { up: true, down: false, left: false, right: true },     // Can go up to 0.0 or right to 1.1
     "1.1": { up: false, down: false, left: true, right: true },     // Can go left to 1.0 or right to 1.2
     "1.2": { up: false, down: true, left: true, right: false },     // Can go left to 1.1 or down to 2.0
     "2.0": { up: true, down: true, left: false, right: false },     // Can go up to 1.2 or down to 3.0
     "3.0": { up: true, down: false, left: false, right: true },     // Can go up to 2.0 or right to 3.1
     "3.1": { up: false, down: true, left: true, right: false },     // Can go left to 3.0 or down to 4.0
-    "4.0": { up: true, down: false, left: false, right: false },    // Can only go up to 3.1
+    "4.0": { up: true, down: true, left: false, right: false },     // Can go up to 3.1 or down to 5.0
+    "5.0": { up: true, down: true, left: false, right: false },     // Can go up to 4.0 or down to 0.0
   };
 
   // Get current slide constraints
@@ -64,6 +65,10 @@ const Slider = ({
           // From 4.0 to 3.1
           setCurrentVerticalIndex(3);
           setCurrentHorizontalIndex(1);
+        } else if (currentVerticalIndex === 5) {
+          // From 5.0 to 4.0
+          setCurrentVerticalIndex(4);
+          setCurrentHorizontalIndex(0);
         } else if (currentVerticalIndex > 0) {
           setCurrentVerticalIndex(currentVerticalIndex - 1);
           // Keep horizontal index unless it's invalid for the new vertical position
@@ -90,7 +95,15 @@ const Slider = ({
           // From 3.1 to 4.0
           setCurrentVerticalIndex(4);
           setCurrentHorizontalIndex(0);
-        } else if (currentVerticalIndex < 4) {
+        } else if (currentVerticalIndex === 4) {
+          // From 4.0 to 5.0
+          setCurrentVerticalIndex(5);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex === 5) {
+          // From 5.0 to 0.0
+          setCurrentVerticalIndex(0);
+          setCurrentHorizontalIndex(0);
+        } else if (currentVerticalIndex < 5) {
           setCurrentVerticalIndex(currentVerticalIndex + 1);
           setCurrentHorizontalIndex(0); // Reset horizontal index when moving down
         }
@@ -195,6 +208,8 @@ const Slider = ({
       return { x: 200 + (currentHorizontalIndex * 100), y: 300 };
     } else if (currentVerticalIndex === 4) {
       return { x: 300, y: 400 };
+    } else if (currentVerticalIndex === 5) {
+      return { x: 300, y: 500 };
     }
     return { x: 0, y: 0 };
   };
@@ -286,6 +301,9 @@ const Slider = ({
           } else if (vIndex === 4) {
             left = '300vw';
             top = '400vh';
+          } else if (vIndex === 5) {
+            left = '300vw';
+            top = '500vh';
           }
 
           return (
